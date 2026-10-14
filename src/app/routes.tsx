@@ -5,6 +5,7 @@ import { NotFoundPage } from "@/components/NotFoundPage"
 import { LoginPage } from "@/features/auth/LoginPage"
 import { ProtectedRoute, PublicOnlyRoute } from "@/features/auth/ProtectedRoute"
 import { SignupPage } from "@/features/auth/SignupPage"
+import { ComparePage } from "@/features/compare/ComparePage"
 import { ProfilePage } from "@/features/profile/ProfilePage"
 import { HomePage } from "@/features/search/HomePage"
 
@@ -20,6 +21,7 @@ export function AppRoutes() {
         <Route element={<AppShell />}>
           <Route index element={<HomePage />} />
           <Route path="d/:username" element={<ProfilePage />} />
+          <Route path="compare" element={<ComparePage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Route>
