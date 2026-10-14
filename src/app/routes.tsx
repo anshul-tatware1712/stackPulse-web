@@ -5,6 +5,7 @@ import { NotFoundPage } from "@/components/NotFoundPage"
 import { LoginPage } from "@/features/auth/LoginPage"
 import { ProtectedRoute, PublicOnlyRoute } from "@/features/auth/ProtectedRoute"
 import { SignupPage } from "@/features/auth/SignupPage"
+import { ProfilePage } from "@/features/profile/ProfilePage"
 import { HomePage } from "@/features/search/HomePage"
 
 export function AppRoutes() {
@@ -18,6 +19,7 @@ export function AppRoutes() {
       <Route element={<ProtectedRoute />}>
         <Route element={<AppShell />}>
           <Route index element={<HomePage />} />
+          <Route path="d/:username" element={<ProfilePage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Route>
