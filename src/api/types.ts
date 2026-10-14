@@ -41,6 +41,7 @@ export interface Repo {
   primaryLanguage: string | null
   pushedAt: string | null
   pinned?: boolean
+  pinId?: number | null
 }
 
 export interface LanguageShare {

@@ -1,21 +1,53 @@
-# React + TypeScript + Vite + shadcn/ui
+# StackPulse Web
 
-This is a template for a new Vite project with React, TypeScript, and shadcn/ui.
+Frontend for StackPulse: look up GitHub developers, compare them side by side, pin repositories with notes and tags, and save comparisons. It talks to the StackPulse REST API (`/api/v1`).
 
-## Adding components
+## Stack
 
-To add components to your app, run the following command:
+Vite, React 19, TypeScript, Tailwind CSS 4, shadcn/ui, React Router, TanStack Query, Recharts, react-hook-form + zod.
+
+## Getting started
+
+Requires Node 22+ and a running StackPulse backend.
 
 ```bash
-npx shadcn@latest add button
+npm install
+cp .env.example .env
+npm run dev
 ```
 
-This will place the ui components in the `src/components` directory.
+| Variable            | Purpose                                                                     | Default                 |
+| ------------------- | --------------------------------------------------------------------------- | ----------------------- |
+| `VITE_API_URL`      | API base URL used by the browser. Use a full URL when the API is on another origin. | `/api/v1`               |
+| `VITE_PROXY_TARGET` | Backend origin the dev server proxies `/api` to. Dev only.                  | `http://localhost:3000` |
 
-## Using components
+In development the Vite proxy forwards `/api` to the backend, so cookies stay same-origin. For a production build against a separate API origin, set `VITE_API_URL` and enable credentialed CORS on the backend.
 
-To use the components in your app, import them as follows:
+## Scripts
 
-```tsx
-import { Button } from "@/components/ui/button"
+- `npm run dev`: start the dev server
+- `npm run build`: type-check and build to `dist/`
+- `npm run lint`: ESLint
+- `npm run preview`: serve the production build
+
+The app is a single-page app; configure the host to serve `index.html` for unknown paths.
+
+## Features
+
+- **Auth:** signup and login. The access token is kept in memory only; the refresh token is an httpOnly cookie and is used transparently on 401.
+- **Search and profile (`/`, `/d/:username`):** profile, metric cards, language breakdown, weekly commit chart, and a filterable, sortable, paginated repository list. Languages and commits are enriched in the background, and the page polls until they are ready.
+- **Compare (`/compare?u=a&u=b`):** two to five developers. Selection lives in the URL so it can be shared. Table with per-metric leaders and charts for stars, followers, commits, languages and commit trend.
+- **Pins (`/pins`):** pin any repository, add a note (up to 2000 characters) and up to 10 tags, filter by tag. Pinning is optimistic and rolls back on failure.
+- **Saved comparisons (`/comparisons`, `/comparisons/:id`):** save, reopen with fresh metrics, rename and delete.
+- **Responsive:** bottom navigation, card lists and a horizontally scrollable comparison table on small screens.
+
+## Structure
+
+```
+src/
+  api/          typed API client, endpoint hooks, response types (types.ts is the contract)
+  app/          providers and routes (page routes are lazy-loaded)
+  components/   layout and shadcn/ui primitives
+  features/     auth, search, profile, compare, pins, comparisons
+  lib/          formatting, colours, helpers
 ```

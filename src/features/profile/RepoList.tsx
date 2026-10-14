@@ -31,6 +31,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
+import { PinButton } from "@/features/pins/PinButton"
 import { languageColor } from "@/lib/colors"
 import { formatCompact, formatRelativeTime } from "@/lib/format"
 
@@ -82,7 +83,10 @@ function RepoCards({ repos }: { repos: Repo[] }) {
     <ul className="flex flex-col gap-3 md:hidden">
       {repos.map((repo) => (
         <li key={repo.id} className="flex flex-col gap-2 rounded-xl border p-3">
-          <RepoName repo={repo} />
+          <div className="flex items-start justify-between gap-2">
+            <RepoName repo={repo} />
+            <PinButton repo={repo} />
+          </div>
           {repo.description && (
             <p className="line-clamp-2 text-sm text-muted-foreground">
               {repo.description}
@@ -112,6 +116,9 @@ function RepoTable({ repos }: { repos: Repo[] }) {
             <TableHead>Language</TableHead>
             <TableHead className="text-right">Stars</TableHead>
             <TableHead className="text-right">Updated</TableHead>
+            <TableHead className="w-20">
+              <span className="sr-only">Pin</span>
+            </TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -133,6 +140,11 @@ function RepoTable({ repos }: { repos: Repo[] }) {
               </TableCell>
               <TableCell className="text-right text-muted-foreground">
                 {formatRelativeTime(repo.pushedAt)}
+              </TableCell>
+              <TableCell>
+                <div className="flex justify-end">
+                  <PinButton repo={repo} />
+                </div>
               </TableCell>
             </TableRow>
           ))}

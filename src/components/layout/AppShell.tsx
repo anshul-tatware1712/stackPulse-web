@@ -1,9 +1,11 @@
 import { LogOutIcon } from "lucide-react"
+import { Suspense } from "react"
 import { NavLink, Outlet } from "react-router-dom"
 
 import { Logo } from "@/components/layout/Logo"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
+import { Spinner } from "@/components/ui/spinner"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -79,7 +81,16 @@ export function AppShell() {
       </header>
 
       <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-6 pb-24 md:pb-8">
-        <Outlet />
+        <Suspense
+          fallback={
+            <div className="flex justify-center py-24" role="status">
+              <Spinner className="size-6" />
+              <span className="sr-only">Loading</span>
+            </div>
+          }
+        >
+          <Outlet />
+        </Suspense>
       </main>
 
       <nav
