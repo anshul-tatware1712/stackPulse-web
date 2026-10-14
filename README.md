@@ -21,16 +21,14 @@ npm run dev
 | `VITE_API_URL`      | API base URL used by the browser. Use a full URL when the API is on another origin. | `/api/v1`               |
 | `VITE_PROXY_TARGET` | Backend origin the dev server proxies `/api` to. Dev only.                  | `http://localhost:3000` |
 
-In development the Vite proxy forwards `/api` to the backend, so cookies stay same-origin. For a production build against a separate API origin, set `VITE_API_URL` and enable credentialed CORS on the backend.
+In development the Vite proxy forwards `/api` to the backend, so the refresh cookie stays same-origin. This project is for local development only and is not deployed.
 
 ## Scripts
 
 - `npm run dev`: start the dev server
 - `npm run build`: type-check and build to `dist/`
 - `npm run lint`: ESLint
-- `npm run preview`: serve the production build
-
-The app is a single-page app; configure the host to serve `index.html` for unknown paths.
+- `npm run preview`: serve the production build locally
 
 ## Features
 
